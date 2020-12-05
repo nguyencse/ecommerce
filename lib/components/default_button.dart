@@ -14,7 +14,7 @@ class DefaultButton extends StatelessWidget {
       height: getProportionateScreenHeight(56),
       child: FlatButton(
         color: kPrimaryColor,
-        onPressed: () {},
+        onPressed: onPress,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Text(
           'Continue',
