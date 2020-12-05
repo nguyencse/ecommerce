@@ -9,12 +9,9 @@ class SignInSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: SizedBox(),
-        centerTitle: true,
-        title: Text('Login Success'),
+      body: SafeArea(
+        child: Body(),
       ),
-      body: SafeArea(child: Body()),
     );
   }
 }
