@@ -2,6 +2,7 @@ import 'package:ecommerce/components/custom_suffix_icon.dart';
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/components/form_error.dart';
 import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/screens/forgot_password/forgot_password_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -44,9 +45,15 @@ class _FormLoginState extends State<FormLogin> {
                   'Remember me',
                 ),
                 Spacer(),
-                Text(
-                  'Forgot password',
-                  style: TextStyle(decoration: TextDecoration.underline),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, ForgotPasswordScreen.routeName);
+                  },
+                  child: Text(
+                    'Forgot password',
+                    style: TextStyle(decoration: TextDecoration.underline),
+                  ),
                 ),
               ],
             ),
