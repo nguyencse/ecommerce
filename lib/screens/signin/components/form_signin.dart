@@ -41,9 +41,7 @@ class _FormLoginState extends State<FormLogin> {
                         remember = !remember;
                       });
                     }),
-                Text(
-                  'Remember me',
-                ),
+                Text('Remember me'),
                 Spacer(),
                 InkWell(
                   onTap: () {
@@ -101,7 +99,7 @@ class _FormLoginState extends State<FormLogin> {
             errors.add(kInvalidEmailError);
           });
         }
-        return null;
+        return '';
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -138,7 +136,7 @@ class _FormLoginState extends State<FormLogin> {
             errors.add(kShortPassError);
           });
         }
-        return null;
+        return '';
       },
       obscureText: true,
       decoration: InputDecoration(

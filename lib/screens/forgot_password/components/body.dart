@@ -108,7 +108,7 @@ class _BodyState extends State<Body> {
             errors.add(kInvalidEmailError);
           });
         }
-        return null;
+        return '';
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
