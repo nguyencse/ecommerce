@@ -2,71 +2,49 @@ import 'package:ecommerce/components/custom_suffix_icon.dart';
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/components/form_error.dart';
 import 'package:ecommerce/constants.dart';
-import 'package:ecommerce/screens/forgot_password/forgot_password_screen.dart';
-import 'package:ecommerce/screens/sign_in_success/components/sign_in_success.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
-class FormLogin extends StatefulWidget {
+class FormSignUp extends StatefulWidget {
+  const FormSignUp({
+    Key key,
+  }) : super(key: key);
+
   @override
-  _FormLoginState createState() => _FormLoginState();
+  _FormSignUpState createState() => _FormSignUpState();
 }
 
-class _FormLoginState extends State<FormLogin> {
-  final List<String> errors = [];
+class _FormSignUpState extends State<FormSignUp> {
   final _formKey = GlobalKey<FormState>();
+  final List<String> errors = [];
   String email;
   String password;
-  bool remember = false;
+  String confirmPassword;
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        padding: EdgeInsets.symmetric(
+          horizontal: getProportionateScreenWidth(20),
+        ),
         child: Column(
           children: [
+            SizedBox(height: SizeConfig.screenHeight * 0.08),
             buildEmailField(),
             SizedBox(height: getProportionateScreenHeight(20)),
             buildPasswordField(),
-            SizedBox(height: getProportionateScreenHeight(10)),
-            Row(
-              children: [
-                Checkbox(
-                    activeColor: kPrimaryColor,
-                    value: remember,
-                    onChanged: (value) {
-                      setState(() {
-                        remember = !remember;
-                      });
-                    }),
-                Text('Remember me'),
-                Spacer(),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, ForgotPasswordScreen.routeName);
-                  },
-                  child: Text(
-                    'Forgot password',
-                    style: TextStyle(decoration: TextDecoration.underline),
-                  ),
-                ),
-              ],
-            ),
+            SizedBox(height: getProportionateScreenHeight(20)),
+            buildConfirmPasswordField(),
+            SizedBox(height: getProportionateScreenHeight(20)),
             FormError(errors: errors),
-            SizedBox(height: getProportionateScreenHeight(40)),
+            SizedBox(height: SizeConfig.screenHeight * 0.06),
             DefaultButton(
-              title: 'Sign In',
+              title: 'Continue',
               onPress: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  setState(() {
-                    errors.clear();
-                  });
-                  Navigator.pushNamed(context, SignInSuccess.routeName);
                 }
               },
             ),
@@ -111,10 +89,11 @@ class _FormLoginState extends State<FormLogin> {
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'Enter your email',
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Mail.svg')),
+        labelText: 'Email',
+        hintText: 'Enter your email',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Mail.svg'),
+      ),
     );
   }
 
@@ -155,6 +134,45 @@ class _FormLoginState extends State<FormLogin> {
           hintText: 'Enter your password',
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Lock.svg')),
+    );
+  }
+
+  TextFormField buildConfirmPasswordField() {
+    return TextFormField(
+      onSaved: (newValue) => confirmPassword = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty && errors.contains(kPassNullError)) {
+          setState(() {
+            errors.remove(kPassNullError);
+          });
+        } else if (value.length > 6 && errors.contains(kShortPassError)) {
+          setState(() {
+            errors.remove(kShortPassError);
+          });
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty && !errors.contains(kMatchPassError)) {
+          setState(() {
+            errors.add(kMatchPassError);
+          });
+          return '';
+        } else if (value.isNotEmpty && value != password && !errors.contains(kMatchPassError)) {
+          setState(() {
+            errors.add(kMatchPassError);
+          });
+          return '';
+        }
+        return null;
+      },
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: 'Confirm password',
+        hintText: 'Re-enter your password',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Lock.svg'),
+      ),
     );
   }
 }

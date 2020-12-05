@@ -1,5 +1,6 @@
 import 'package:ecommerce/components/social_card.dart';
 import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/screens/sign_up/sign_up_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +26,7 @@ class _BodyState extends State<Body> {
             SizedBox(height: SizeConfig.screenHeight * 0.04),
             Text(
               'Welcome Back',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: getProportionateScreenWidth(28),
-                fontWeight: FontWeight.bold,
-              ),
+              style: kTextStyleHeading,
             ),
             Text(
               'Sign in with your email and password\nor continue with social media',
@@ -57,7 +54,9 @@ class _BodyState extends State<Body> {
                 Text('Don\'t have an account?'),
                 SizedBox(width: 4),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, SignUpScreen.routeName);
+                  },
                   child: Text(
                     'Sign Up',
                     style: TextStyle(

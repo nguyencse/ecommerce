@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'size_config.dart';
+
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
@@ -23,3 +25,9 @@ const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please enter your name";
 const String kPhoneNumberNullError = "Please enter your phone number";
 const String kAddressNullError = "Please enter your address";
+
+var kTextStyleHeading = TextStyle(
+  color: Colors.black,
+  fontSize: getProportionateScreenWidth(28),
+  fontWeight: FontWeight.bold,
+);

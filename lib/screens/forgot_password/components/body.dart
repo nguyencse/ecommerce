@@ -2,6 +2,7 @@ import 'package:ecommerce/components/custom_suffix_icon.dart';
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/components/form_error.dart';
 import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/screens/sign_up/sign_up_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +26,7 @@ class _BodyState extends State<Body> {
             SizedBox(height: SizeConfig.screenHeight * 0.04),
             Text(
               'Forgot Password',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: getProportionateScreenWidth(28),
-                fontWeight: FontWeight.bold,
-              ),
+              style: kTextStyleHeading,
             ),
             Text(
               'Please enter your email and we will send\nyou a link to reset your password',
@@ -68,7 +65,9 @@ class _BodyState extends State<Body> {
                 Text('Don\'t have an account?'),
                 SizedBox(width: 4),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, SignUpScreen.routeName);
+                  },
                   child: Text(
                     'Sign Up',
                     style: TextStyle(
