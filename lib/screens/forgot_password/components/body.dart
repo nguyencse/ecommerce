@@ -52,6 +52,9 @@ class _BodyState extends State<Body> {
                         onPress: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
+                            setState(() {
+                              errors.clear();
+                            });
                           }
                         }),
                   ],
@@ -88,12 +91,14 @@ class _BodyState extends State<Body> {
           setState(() {
             errors.remove(kEmailNullError);
           });
+          return null;
         } else if (value.isNotEmpty &&
             emailValidatorRegExp.hasMatch(value) &&
             errors.contains(kInvalidEmailError)) {
           setState(() {
             errors.remove(kInvalidEmailError);
           });
+          return null;
         }
       },
       validator: (value) {
@@ -101,14 +106,16 @@ class _BodyState extends State<Body> {
           setState(() {
             errors.add(kEmailNullError);
           });
+          return '';
         } else if (value.isNotEmpty &&
             !emailValidatorRegExp.hasMatch(value) &&
             !errors.contains(kInvalidEmailError)) {
           setState(() {
             errors.add(kInvalidEmailError);
           });
+          return '';
         }
-        return '';
+        return null;
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(

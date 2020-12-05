@@ -17,7 +17,7 @@ class DefaultButton extends StatelessWidget {
         onPressed: onPress,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Text(
-          'Continue',
+          title,
           style: TextStyle(
               color: Colors.white, fontSize: getProportionateScreenWidth(18)),
         ),

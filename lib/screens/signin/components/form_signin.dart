@@ -3,6 +3,8 @@ import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/components/form_error.dart';
 import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/screens/forgot_password/forgot_password_screen.dart';
+import 'package:ecommerce/screens/sign_in_success/components/sign_in_success.dart';
+import 'package:ecommerce/screens/signin/sign_in_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -62,6 +64,10 @@ class _FormLoginState extends State<FormLogin> {
               onPress: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
+                  setState(() {
+                    errors.clear();
+                  });
+                  Navigator.pushNamed(context, SignInSuccess.routeName);
                 }
               },
             ),
@@ -86,20 +92,23 @@ class _FormLoginState extends State<FormLogin> {
             errors.remove(kInvalidEmailError);
           });
         }
+        return null;
       },
       validator: (value) {
         if (value.isEmpty && !errors.contains(kEmailNullError)) {
           setState(() {
             errors.add(kEmailNullError);
           });
+          return '';
         } else if (value.isNotEmpty &&
             !emailValidatorRegExp.hasMatch(value) &&
             !errors.contains(kInvalidEmailError)) {
           setState(() {
             errors.add(kInvalidEmailError);
           });
+          return '';
         }
-        return '';
+        return null;
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -123,20 +132,23 @@ class _FormLoginState extends State<FormLogin> {
             errors.remove(kShortPassError);
           });
         }
+        return null;
       },
       validator: (value) {
         if (value.isEmpty && !errors.contains(kPassNullError)) {
           setState(() {
             errors.add(kPassNullError);
           });
+          return '';
         } else if (value.isNotEmpty &&
             value.length < 6 &&
             !errors.contains(kShortPassError)) {
           setState(() {
             errors.add(kShortPassError);
           });
+          return '';
         }
-        return '';
+        return null;
       },
       obscureText: true,
       decoration: InputDecoration(
