@@ -86,32 +86,19 @@ class _BodyState extends State<Body> {
     return TextFormField(
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-          return null;
-        } else if (value.isNotEmpty &&
-            emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
-          return null;
+        if (value.isNotEmpty) {
+          removeError(error: kEmailNullError);
+        } else if (value.isNotEmpty && emailValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidEmailError);
         }
+        return null;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
+        if (value.isEmpty) {
+          addError(error: kEmailNullError);
           return '';
-        } else if (value.isNotEmpty &&
-            !emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidEmailError);
           return '';
         }
         return null;
@@ -123,5 +110,21 @@ class _BodyState extends State<Body> {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Mail.svg')),
     );
+  }
+
+  void removeError({String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  void addError({String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
   }
 }
