@@ -1,22 +1,26 @@
-import 'package:ecommerce/screens/home/components/body.dart';
+import 'package:ecommerce/screens/home/components/category_view.dart';
 import 'package:ecommerce/screens/home/components/header_block.dart';
+import 'package:ecommerce/screens/home/components/product_view.dart';
+import 'package:ecommerce/screens/home/models/Product.dart';
 import 'package:ecommerce/screens/home/models/home_item.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
 class HomeBlock extends StatefulWidget {
-  const HomeBlock({
-    Key key,
-    this.type = TYPE_CATE,
-    this.headerLeft,
-    this.headerRight,
-    this.items,
-  }) : super(key: key);
+  const HomeBlock(
+      {Key key,
+      this.type = TYPE_CATE,
+      this.headerLeft,
+      this.headerRight,
+      this.cates,
+      this.products})
+      : super(key: key);
 
   final int type;
   final String headerLeft;
   final String headerRight;
-  final List<HomeItem> items;
+  final List<HomeItem> cates;
+  final List<Product> products;
 
   static const int TYPE_CATE = 0;
   static const int TYPE_PRODUCT = 1;
@@ -56,12 +60,12 @@ class _HomeBlockState extends State<HomeBlock> {
       height: getProportionateScreenHeight(100),
       child: ListView.separated(
         separatorBuilder: (ctx, idx) => SizedBox(width: 10),
-        itemBuilder: (ctx, idx) => BannerProduct(
-          title: widget.items[idx].title,
-          subitle: widget.items[idx].subtitle,
-          background: widget.items[idx].background,
+        itemBuilder: (ctx, idx) => CategoryView(
+          title: widget.cates[idx].title,
+          subitle: widget.cates[idx].subtitle,
+          background: widget.cates[idx].background,
         ),
-        itemCount: widget.items.length,
+        itemCount: widget.cates.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -70,6 +74,16 @@ class _HomeBlockState extends State<HomeBlock> {
   }
 
   Widget buildListProducts() {
-    return Container();
+    return SizedBox(
+      height: getProportionateScreenHeight(250),
+      child: ListView.separated(
+        separatorBuilder: (ctx, idx) => SizedBox(width: 10),
+        itemBuilder: (ctx, idx) => ProductView(product: widget.products[idx]),
+        itemCount: widget.products.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 16),
+      ),
+    );
   }
 }

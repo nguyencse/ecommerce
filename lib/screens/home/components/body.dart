@@ -1,7 +1,7 @@
 import 'package:ecommerce/components/icon_btn_with_counter.dart';
 import 'package:ecommerce/components/shortcut.dart';
-import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/screens/home/components/home_block.dart';
+import 'package:ecommerce/screens/home/models/Product.dart';
 import 'package:ecommerce/screens/home/models/home_item.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,24 @@ class Body extends StatelessWidget {
         title: 'Fashion',
         subtitle: '24 Brands',
         background: 'assets/images/Image Banner 3.png'),
+  ];
+
+  List<Product> products = [
+    Product(
+      name: 'Wireless Controller for PS4',
+      price: '64.99',
+      thumbnail: 'assets/images/Image Popular Product 1.png',
+    ),
+    Product(
+      name: 'Nike Sport White - Man Pant',
+      price: '64.99',
+      thumbnail: 'assets/images/Image Popular Product 2.png',
+    ),
+    Product(
+      name: 'Gloves Sport Orange - Polygons',
+      price: '64.99',
+      thumbnail: 'assets/images/Image Popular Product 3.png',
+    ),
   ];
 
   @override
@@ -34,7 +52,14 @@ class Body extends StatelessWidget {
             type: HomeBlock.TYPE_CATE,
             headerLeft: 'Special for you',
             headerRight: 'See More',
-            items: cates,
+            cates: cates,
+          ),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          HomeBlock(
+            type: HomeBlock.TYPE_PRODUCT,
+            headerLeft: 'Popular Product',
+            headerRight: 'See More',
+            products: products,
           ),
         ],
       ),
@@ -148,71 +173,6 @@ class Body extends StatelessWidget {
           counter: 3,
         ),
         SizedBox(width: getProportionateScreenWidth(16)),
-      ],
-    );
-  }
-}
-
-class BannerProduct extends StatelessWidget {
-  const BannerProduct({
-    Key key,
-    this.title,
-    this.subitle,
-    this.background,
-  }) : super(key: key);
-
-  final String title;
-  final String subitle;
-  final String background;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Image.asset(
-            background,
-            width: SizeConfig.screenWidth * 0.65,
-            height: getProportionateScreenHeight(100),
-            fit: BoxFit.cover,
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.black.withOpacity(0.2)),
-          ),
-        ),
-        Positioned(
-          top: 5,
-          left: 15,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                subitle,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }
