@@ -23,6 +23,7 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
+          SizedBox(height: getProportionateScreenHeight(16)),
           buildTopBar(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildBanner(),
